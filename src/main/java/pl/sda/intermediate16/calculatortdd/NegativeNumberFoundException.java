@@ -1,4 +1,4 @@
-package pl.sda.intermediate16;
+package pl.sda.intermediate16.calculatortdd;
 
 public class NegativeNumberFoundException extends RuntimeException {
 

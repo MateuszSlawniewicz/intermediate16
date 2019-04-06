@@ -1,16 +1,13 @@
-package pl.sda.intermediate16;
+package pl.sda.intermediate16.categories;
 
 import com.google.common.io.Resources;
 import lombok.Getter;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -99,7 +96,7 @@ public class InMemoryCategoryDAO {
 
     private Integer calculateDepth(String categoryName) { //na podstawie spacji liczymy zagnieżdżenie kategorii
         return categoryName.startsWith(" ")
-                ? categoryName.split("\\S+")[0].length()
+                ? categoryName.split("\\S+")[   0].length()
                 : 0;
     }
 }
