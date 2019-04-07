@@ -17,12 +17,16 @@ public class StringCalculator {
         }
 
         if (text.startsWith("//")) {
+            // Pattern pattern = Pattern.compile("//(.*)\n(.*)");
             Pattern pattern = Pattern.compile("//(.*)\n(.*)");
             Matcher matcher = pattern.matcher(text);
             matcher.matches();
-            String delimiter = matcher.group(1);
+            String delimiters = matcher.group(1);
+            String replace = delimiters.replaceAll("[\\[\\]]+", " ")
+                    .trim()
+                    .replaceAll("\\s", "|");
             String[] splitted = text.split("\n");
-            return tokenizeAndSum(splitted[1], String.valueOf(delimiter));
+            return tokenizeAndSum(splitted[1], replace);
         }
         return tokenizeAndSum(text, ",|\n");
     }

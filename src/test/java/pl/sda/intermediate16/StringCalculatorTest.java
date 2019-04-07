@@ -63,11 +63,11 @@ public class StringCalculatorTest {
         Integer result = StringCalculator.adding("//sss\n3sss2");
         Assertions.assertTrue(result.equals(5));
     }
-    @Test
-    void shouldReturnProperValueAfterUsingManyDelimeters(){
-        Integer result = StringCalculator.adding("//[s][d]\n3s2d1");
-        Assertions.assertTrue(result.equals(6));
-    }
+   @Test
+   void shouldReturnProperValueAfterUsingManyDelimeters(){
+       Integer result = StringCalculator.adding("//[ss][dd]\n3ss2dd1");
+       Assertions.assertTrue(result.equals(6));
+  }
 
 
 

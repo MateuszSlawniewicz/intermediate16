@@ -6,11 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.sda.intermediate16.categories.CategorySearchService;
-import pl.sda.intermediate16.users.Countries;
-import pl.sda.intermediate16.users.UserExistException;
-import pl.sda.intermediate16.users.UserRegistrationDTO;
-import pl.sda.intermediate16.users.UserRegistrationService;
-import pl.sda.intermediate16.users.UserValidationService;
+import pl.sda.intermediate16.users.*;
 
 
 import java.util.Map;
@@ -63,5 +59,19 @@ public class OnlyOneController { //ta klasa pozwala kontaktować się przegląda
         return "registerEffect";
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String showLoginForm(Model model) {
+        model.addAttribute("form", new UserRegistrationDTO());
+        return "loginForm";
+    }
+
+    @RequestMapping(consumes = "/login", method = RequestMethod.POST)
+    public String login(UserLoginDTO uld, Model model) {
+        UserLoginSevice userLoginSevice = new UserLoginSevice();
+        if(userLoginSevice.login(uld)){
+            UserContextHolder.logUserIn(uld);
+        }
+        return "categories";
+    }
 
 }
