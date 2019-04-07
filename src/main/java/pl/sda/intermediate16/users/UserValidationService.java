@@ -38,7 +38,7 @@ public class UserValidationService {
         if (phone == null || !phone.trim().matches("((\\+48)|)( |)[0-9]{9}$")) {
             errorMap.put("phoneValRes", "zły numer telefonu");
         }
-        if (password == null || !password.matches("(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])")) {
+        if (password == null || !password.matches("(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d]).{10,20}")) {
             errorMap.put("passwordValRes", "złe hasło");
         }
         if (!isNotBlank(city)) {

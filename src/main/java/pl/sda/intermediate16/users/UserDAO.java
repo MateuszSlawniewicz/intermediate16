@@ -9,10 +9,7 @@ import java.util.List;
 @Getter
 public class UserDAO {
     private String path = "C:/Users/mateu/IdeaProjects/user_data.txt";
-    private List<User> users;
-    {
-        users=readUsers();
-    }
+    private List<User> users = readUsers();
 
     private List<User> readUsers() {
         try (FileInputStream fis = new FileInputStream(path);

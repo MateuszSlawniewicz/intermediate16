@@ -3,8 +3,12 @@ package pl.sda.intermediate16.users;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class UserRegistrationService {
+    UserDAO userDAO;
+    public UserRegistrationService(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
     public void register(UserRegistrationDTO dto) {
-        UserDAO userDAO = new UserDAO();
         if (userExists(dto, userDAO)) {
             throw new UserExistException("Uzytkownik " + dto.getEMail() + "exists");
         } else {

@@ -4,8 +4,13 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 public class UserLoginSevice {
 
+    UserDAO userDAO ;
+
+    public UserLoginSevice(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
     public boolean login(UserLoginDTO uld) {
-        UserDAO userDAO = new UserDAO();
         return userDAO.getUsers().stream()
                 .filter(e -> e.getLogin().equals(uld.getEmail()))
                 .findAny()

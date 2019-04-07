@@ -13,8 +13,11 @@ import java.util.Map;
 
 @Controller
 public class OnlyOneController { //ta klasa pozwala kontaktować się przeglądarce z naszą aplikacją
-
+    UserDAO userDAO = new UserDAO();
     CategorySearchService categorySearchService = new CategorySearchService();
+    UserValidationService userValidationService = new UserValidationService();
+    UserRegistrationService userRegistrationService = new UserRegistrationService(userDAO);
+    UserLoginSevice userLoginSevice = new UserLoginSevice(userDAO);
 
 
     @ResponseBody
@@ -40,12 +43,10 @@ public class OnlyOneController { //ta klasa pozwala kontaktować się przegląda
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     //ta metoda (POST) obsluguje wyslanie danych z frontu
     public String retrieveRegisterForm(UserRegistrationDTO userRegistrationDTO, Model model) {
-        UserValidationService userValidationService = new UserValidationService();
         Map<String, String> errorMap = userValidationService.validate(userRegistrationDTO);
         model.addAttribute("form", userRegistrationDTO);
         model.addAttribute("countries", Countries.values());
         if (errorMap.isEmpty()) {
-            UserRegistrationService userRegistrationService = new UserRegistrationService();
             try {
                 userRegistrationService.register(userRegistrationDTO);
             } catch (UserExistException e) {
@@ -61,17 +62,16 @@ public class OnlyOneController { //ta klasa pozwala kontaktować się przegląda
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showLoginForm(Model model) {
-        model.addAttribute("form", new UserRegistrationDTO());
+        model.addAttribute("form", new UserLoginDTO());
         return "loginForm";
     }
 
-    @RequestMapping(consumes = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(UserLoginDTO uld, Model model) {
-        UserLoginSevice userLoginSevice = new UserLoginSevice();
-        if(userLoginSevice.login(uld)){
+        if (userLoginSevice.login(uld)) {
             UserContextHolder.logUserIn(uld);
         }
-        return "categories";
+        return "catspage";
     }
 
 }
