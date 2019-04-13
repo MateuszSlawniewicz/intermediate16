@@ -55,4 +55,15 @@ public class Lambdas {
     }
 
 
+    @FunctionalInterface
+    public interface MathOperation<T, E> {
+        public Double operation(T first, E second);
+    }
+
+    @Test
+    void mthOperationTest() {
+        MathOperation<Integer, Long> add = (a, b) -> Double.valueOf(a + b);
+        Double operation = add.operation(4, 5L);
+        System.out.println(operation);
+    }
 }
