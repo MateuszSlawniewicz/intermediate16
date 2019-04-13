@@ -9,4 +9,5 @@ public class CategoryState {
 
     private boolean open;
     private boolean selected;
+    private boolean isVisible;
 }

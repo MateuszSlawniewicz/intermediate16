@@ -1,5 +1,6 @@
 package pl.sda.intermediate16;
 
+import com.google.gson.Gson;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.sda.intermediate16.categories.CategorySearchService;
 import pl.sda.intermediate16.users.*;
+import pl.sda.intermediate16.weather.WeatherResult;
+import pl.sda.intermediate16.weather.WeatherService;
 
 
 import java.util.Map;
@@ -18,12 +21,12 @@ public class OnlyOneController { //ta klasa pozwala kontaktować się przegląda
     UserValidationService userValidationService = new UserValidationService();
     UserRegistrationService userRegistrationService = new UserRegistrationService(userDAO);
     UserLoginSevice userLoginSevice = new UserLoginSevice(userDAO);
+    WeatherService weatherService = new WeatherService(userDAO);
 
 
-    @ResponseBody
     @RequestMapping("/")
     public String ok() {
-        return "OK";
+        return "index";
     }
 
     //adnotacja
@@ -71,7 +74,20 @@ public class OnlyOneController { //ta klasa pozwala kontaktować się przegląda
         if (userLoginSevice.login(uld)) {
             UserContextHolder.logUserIn(uld);
         }
-        return "catspage";
+        return "index";
+    }
+
+    @ResponseBody                 // to mówi, że będzie Jsonem, a nie nazwą hmla
+    @RequestMapping(value = "/weather", method = RequestMethod.GET)
+    public String showWeather() {
+        WeatherResult weather = weatherService.getWeather();
+        return new Gson().toJson(weather);
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout() {
+        UserContextHolder.logUserOut();
+        return "index";
     }
 
 }

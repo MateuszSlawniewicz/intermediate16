@@ -2,6 +2,7 @@ package pl.sda.intermediate16.categories;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CategorySearchService {
 
@@ -25,19 +26,30 @@ public class CategorySearchService {
             );
         }
 
-        for (CategoryDTO categoryDTO : categoryDTOList) { //ustawiamy czy kategoria ma być zaznaczona/rozwinięta
-            if (categoryName!=null && categoryName.trim().equals(categoryDTO.getCategoryName())) { //dodane 'categoryName!=null'
-                categoryDTO.getCategoryState().setOpen(true);
-                categoryDTO.getCategoryState().setSelected(true);
-                openParent(categoryDTO.getParentCat());
+
+        for (CategoryDTO categoryDTO : categoryDTOList) {
+            if (categoryName == null) {
+                return categoryDTOList;
+            } else {
+                if (categoryName.trim().equals(categoryDTO.getCategoryName())) { //dodane 'categoryName!=null'
+                    categoryDTO.getCategoryState().setOpen(true);
+                    categoryDTO.getCategoryState().setSelected(true);
+                    categoryDTO.getCategoryState().setVisible(true);
+                    openParent(categoryDTO.getParentCat());
+                }
             }
+
+
         }
 
-        return categoryDTOList;
+        return categoryDTOList.stream()
+                .filter(e -> e.getCategoryState().isVisible())
+                .collect(Collectors.toList());
     }
 
     private void openParent(CategoryDTO categoryDTO) { //otwieramy wszystkie nadrzędne kategorie
         categoryDTO.getCategoryState().setOpen(true);
+        categoryDTO.getCategoryState().setVisible(true);
         if (categoryDTO.getParentId() == null) {
             return;
         }
