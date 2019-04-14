@@ -1,11 +1,13 @@
 package pl.sda.intermediate16.users;
 
 
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
-
+@Service
 public class UserValidationService {
     public Map<String, String> validate(UserRegistrationDTO dto) {
         Map<String, String> errorMap = new HashMap<>();

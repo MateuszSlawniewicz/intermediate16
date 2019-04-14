@@ -1,12 +1,14 @@
 package pl.sda.intermediate16.users;
 
 import lombok.Getter;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Service   // mówi, że będzie jedna instatncja
 public class UserDAO {
     private String path = "C:/Users/mateu/IdeaProjects/user_data.txt";
     private List<User> users = readUsers();

@@ -5,7 +5,10 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ProteinsChecker {
     @Test
@@ -26,15 +29,20 @@ public class ProteinsChecker {
                 char[] a = secondLine.toCharArray();
                 Arrays.sort(a);
                 boolean equals = Arrays.equals(chars, a);
-                if (equals == true) {
+                if (equals) {
                     System.out.println("Równe");
                 } else
                     System.out.println("Różne");
             }
 
-
         }
+    }
 
+    String data = "";
 
+    @Test
+    void check2() {
+        List<char[]> chars = Arrays.stream(data.split("\\n")).parallel().map(String::toCharArray).peek(Arrays::parallelSort).collect(Collectors.toList());
+        IntStream.iterate(0, n -> n + 2).parallel().limit(chars.size() / 2).forEachOrdered(i -> System.out.println(Arrays.equals(chars.get(i), chars.get(i + 1))));
     }
 }

@@ -1,9 +1,11 @@
 package pl.sda.intermediate16.categories;
 
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class CategorySearchService {
 
     public List<CategoryDTO> filterCategories(String categoryName) {
@@ -63,5 +65,11 @@ public class CategorySearchService {
         categoryDTO.setParentId(category.getParentId());
         categoryDTO.setCategoryState(new CategoryState());
         return categoryDTO;
+    }
+
+    public void moveCat(Integer newParentId, Integer moveId) {
+        InMemoryCategoryDAO.getInstance().getCategoryList().stream()
+                .filter(e -> e.getId().equals(moveId))
+                .forEach(c -> c.setParentId(newParentId));
     }
 }

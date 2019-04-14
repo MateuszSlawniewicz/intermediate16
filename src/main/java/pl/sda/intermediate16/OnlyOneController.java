@@ -1,6 +1,7 @@
 package pl.sda.intermediate16;
 
 import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +17,17 @@ import java.util.Map;
 
 @Controller
 public class OnlyOneController { //ta klasa pozwala kontaktować się przeglądarce z naszą aplikacją
-    UserDAO userDAO = new UserDAO();
-    CategorySearchService categorySearchService = new CategorySearchService();
-    UserValidationService userValidationService = new UserValidationService();
-    UserRegistrationService userRegistrationService = new UserRegistrationService(userDAO);
-    UserLoginSevice userLoginSevice = new UserLoginSevice(userDAO);
-    WeatherService weatherService = new WeatherService(userDAO);
+
+    @Autowired
+    private CategorySearchService categorySearchService;
+    @Autowired
+    private UserValidationService userValidationService;
+    @Autowired
+    private UserRegistrationService userRegistrationService;
+    @Autowired
+    private UserLoginSevice userLoginSevice;
+    @Autowired
+    private WeatherService weatherService;
 
 
     @RequestMapping("/")
@@ -88,6 +94,12 @@ public class OnlyOneController { //ta klasa pozwala kontaktować się przegląda
     public String logout() {
         UserContextHolder.logUserOut();
         return "index";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/moveCat", method = RequestMethod.POST)
+    public void moveCategory(Integer newParentId, Integer moveId) {
+        categorySearchService.moveCat(newParentId, moveId);
     }
 
 }

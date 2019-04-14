@@ -1,5 +1,7 @@
 package pl.sda.intermediate16.weather;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import pl.sda.intermediate16.users.User;
 import pl.sda.intermediate16.users.UserContextHolder;
 import pl.sda.intermediate16.users.UserDAO;
@@ -8,10 +10,11 @@ import retrofit2.adapter.java8.Java8CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.concurrent.CompletableFuture;
-
+@Service
 public class WeatherService {
 
     private String apiKey = "ea900b66f547fd7b23625544873a4200";
+    @Autowired
     private UserDAO userDAO;
 
     public WeatherService(UserDAO userDAO) {

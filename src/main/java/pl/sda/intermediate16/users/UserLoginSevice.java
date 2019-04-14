@@ -1,10 +1,13 @@
 package pl.sda.intermediate16.users;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserLoginSevice {
-
-    UserDAO userDAO ;
+    @Autowired
+    private UserDAO userDAO;
 
     public UserLoginSevice(UserDAO userDAO) {
         this.userDAO = userDAO;
